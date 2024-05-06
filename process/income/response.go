@@ -1,6 +1,8 @@
 package income
 
-import "time"
+import (
+	"time"
+)
 
 type Income struct {
 	Uuid              string
@@ -11,6 +13,6 @@ type Income struct {
 	Metode_pembayaran string
 	Uuid_santri       string
 	Uuid_user         string
-	CreatedAt         *time.Time
-	UpdatedAt         *time.Time
+	CreatedAt         time.Time `gorm:"column:createdAt"`
+	UpdatedAt         time.Time `gorm:"column:updatedAt"`
 }

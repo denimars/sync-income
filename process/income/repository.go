@@ -1,6 +1,10 @@
 package income
 
-import "gorm.io/gorm"
+import (
+	"fmt"
+
+	"gorm.io/gorm"
+)
 
 type Repository interface {
 	GetByDate(start string, end string) []Income
@@ -16,6 +20,7 @@ func NewRepository(db *gorm.DB) *repository {
 
 func (r *repository) GetByDate(start string, end string) []Income {
 	var income []Income
-	r.db.Table("pembayaran").Where("createdAt between ? and ?", start, end).Find(&income)
+	err := r.db.Table("pembayaran").Where("createdAt between ? and ?", start, end).Find(&income).Error
+	fmt.Println(err)
 	return income
 }
