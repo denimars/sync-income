@@ -16,3 +16,11 @@ type Income struct {
 	CreatedAt         time.Time `gorm:"column:createdAt"`
 	UpdatedAt         time.Time `gorm:"column:updatedAt"`
 }
+
+type Lembaga struct {
+	BSI   int
+	Tunai int
+	BNTB  int
+	CIMB  int
+	Name  string
+}
