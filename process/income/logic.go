@@ -70,11 +70,11 @@ func (s *service) cekListLembaga(institution []Lembaga, institutionName string, 
 	return institution
 }
 
-func (s *service) GetData() {
+func (s *service) GetData(start string, end string) {
 	var lembaga_ []Lembaga
-	start := util.FormatToUtc("2024-02-01 00:00:00")
-	end := util.FormatToUtc("2024-05-01 23:59:59")
-	data := s.repository.GetByDate(start, end)
+	startWithTime := util.FormatToUtc(fmt.Sprintf("%s 00:00:00", start))
+	endWithTime := util.FormatToUtc(fmt.Sprintf("%s 23:59:59", end))
+	data := s.repository.GetByDate(startWithTime, endWithTime)
 
 	for _, d := range data {
 		institutionName := util.Institution(strconv.Itoa(d.Nuwb))

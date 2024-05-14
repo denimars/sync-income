@@ -2,6 +2,7 @@ package main
 
 import (
 	"sync-finance/database"
+	"sync-finance/process/command"
 	"sync-finance/process/income"
 )
 
@@ -10,7 +11,8 @@ func main() {
 	mysqlDB := database.MysqlConnection()
 	repoIncome := income.NewRepository(mysqlDB)
 	logicIncome := income.NewLogic(repoIncome)
-	logicIncome.GetData()
+	logicIncome.GetData("2024-03-01", "2024-03-31")
+	command.Execute()
 
 	// ctx := context.Background()
 	// rd, _ := database.RedisConnection()
