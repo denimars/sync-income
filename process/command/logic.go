@@ -7,20 +7,21 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"sync-finance/util"
+	"time"
 )
 
 func Execute() {
-	out, err := exec.Command("mysqldump", "db_name", "-u", "root", "-ppassword").Output()
+	util.LoadEnv()
+	timeNow := time.Now()
+	out, err := exec.Command("mysqldump", os.Getenv("MYSQL_DB_NAME"), "-u", os.Getenv("MYSQL_USER"), fmt.Sprintf("-p%v", os.Getenv("MYSQL_PASSWORD"))).Output()
 	if err != nil {
 		fmt.Printf("%s", err)
 	}
 
 	reader := bytes.NewReader(out)
 
-	if err != nil {
-		log.Fatal(err)
-	}
-	file, err := os.Create(fmt.Sprintf("%v%v%v.sql", "backup", "2", "2"))
+	file, err := os.Create(fmt.Sprintf("%v%v.sql", os.Getenv("MYSQL_DB_NAME"), timeNow.Format("200601021504")))
 	if err != nil {
 		log.Fatalf("Error creating file: %s", err)
 	}
@@ -31,6 +32,6 @@ func Execute() {
 		log.Fatalf("Error writing to file: %s", err)
 	}
 
-	fmt.Println("Backup completed. File saved as backup.sql")
+	fmt.Println("Backup completed. File saved.")
 
 }
